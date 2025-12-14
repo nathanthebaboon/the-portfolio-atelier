@@ -1,46 +1,32 @@
 import { NextResponse } from "next/server";
-import path from "path";
-import { promises as fs } from "fs";
+import { sql } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 
-/**
- * POST /api/order
- * Saves order metadata (NO FILES) and returns an orderId
- */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const payload = await req.json();
 
-    // Basic validation
-    if (!body?.name || !body?.email) {
-      return NextResponse.json(
-        { ok: false, error: "Name and email are required." },
-        { status: 400 }
+    await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS orders (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        payload JSONB NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now()
       );
-    }
+    `;
 
-    // Generate simple unique order id
-    const orderId = `${Date.now()}_${Math.random().toString(16).slice(2, 8)}`;
+    const { rows } = await sql`
+      INSERT INTO orders (payload)
+      VALUES (${payload})
+      RETURNING id;
+    `;
 
-    const record = {
-      id: orderId,
-      ...body,
-      createdAt: new Date().toISOString(),
-    };
-
-    // Ensure data directory exists
-    const ordersDir = path.join(process.cwd(), "data", "orders");
-    await fs.mkdir(ordersDir, { recursive: true });
-
-    // Write order JSON
-    const filePath = path.join(ordersDir, `${orderId}.json`);
-    await fs.writeFile(filePath, JSON.stringify(record, null, 2), "utf-8");
-
-    return NextResponse.json({ ok: true, id: orderId });
-  } catch (err: any) {
+    return NextResponse.json({ id: rows[0].id }, { status: 200 });
+  } catch (e: any) {
     return NextResponse.json(
-      { ok: false, error: err?.message || "Failed to save order." },
+      { error: e?.message || "Order creation failed" },
       { status: 500 }
     );
   }

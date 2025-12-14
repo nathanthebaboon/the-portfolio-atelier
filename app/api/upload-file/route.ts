@@ -1,45 +1,64 @@
 import { NextResponse } from "next/server";
-import path from "path";
-import { promises as fs } from "fs";
+import { put } from "@vercel/blob";
+import { sql } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 
-function safeName(name: string) {
-  return name.replace(/[^a-zA-Z0-9._-]/g, "_");
-}
-
 export async function POST(req: Request) {
   try {
-    const fd = await req.formData();
+    const form = await req.formData();
 
-    const orderId = fd.get("orderId");
-    const sectionIdx = fd.get("sectionIdx");
-    const fileIdx = fd.get("fileIdx");
-    const file = fd.get("file");
+    const orderId = String(form.get("orderId") || "");
+    const sectionIdx = Number(form.get("sectionIdx"));
+    const fileIdx = Number(form.get("fileIdx"));
+    const file = form.get("file") as File | null;
 
-    if (typeof orderId !== "string") {
-      return NextResponse.json({ ok: false, error: "Missing orderId" }, { status: 400 });
-    }
-    if (typeof sectionIdx !== "string" || typeof fileIdx !== "string") {
-      return NextResponse.json({ ok: false, error: "Missing sectionIdx/fileIdx" }, { status: 400 });
-    }
-    if (!(file instanceof File)) {
-      return NextResponse.json({ ok: false, error: "Missing file" }, { status: 400 });
+    if (!orderId) {
+      return NextResponse.json({ error: "Missing orderId" }, { status: 400 });
     }
 
-    const uploadDir = path.join(process.cwd(), "data", "uploads", orderId);
-    await fs.mkdir(uploadDir, { recursive: true });
+    if (
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId)
+    ) {
+      return NextResponse.json({ error: "Invalid orderId" }, { status: 400 });
+    }
 
-    const storedName = `s${sectionIdx}_f${fileIdx}_${safeName(file.name)}`;
-    const outPath = path.join(uploadDir, storedName);
+    if (!file) {
+      return NextResponse.json({ error: "Missing file" }, { status: 400 });
+    }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(outPath, buffer);
+    // Upload to Blob
+    const ext = (file.name.split(".").pop() || "bin").toLowerCase();
+    const blobPath = `orders/${orderId}/s${sectionIdx}-f${fileIdx}.${ext}`;
 
-    return NextResponse.json({ ok: true, storedName });
+    const blob = await put(blobPath, file, {
+      access: "public",
+      contentType: file.type || "application/octet-stream",
+    });
+
+    // Table to track uploads
+    await sql`
+      CREATE TABLE IF NOT EXISTS order_files (
+        id BIGSERIAL PRIMARY KEY,
+        order_id UUID NOT NULL,
+        section_idx INT NOT NULL,
+        file_idx INT NOT NULL,
+        original_name TEXT NOT NULL,
+        blob_url TEXT NOT NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      );
+    `;
+
+    await sql`
+      INSERT INTO order_files (order_id, section_idx, file_idx, original_name, blob_url)
+      VALUES (${orderId}::uuid, ${sectionIdx}, ${fileIdx}, ${file.name}, ${blob.url});
+    `;
+
+    // Return something your UI can show
+    return NextResponse.json({ storedName: blobPath, url: blob.url }, { status: 200 });
   } catch (e: any) {
     return NextResponse.json(
-      { ok: false, error: e?.message || "Upload failed" },
+      { error: e?.message || "Upload failed" },
       { status: 500 }
     );
   }
