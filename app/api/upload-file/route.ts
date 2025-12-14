@@ -1,17 +1,11 @@
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
-import { createClient } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  const client = createClient({
-    connectionString: process.env.POSTGRES_URL_NON_POOLING,
-  });
-
   try {
-    await client.connect();
-
     const form = await req.formData();
 
     const orderId = String(form.get("orderId") || "");
@@ -52,8 +46,8 @@ export async function POST(req: Request) {
       contentType: file.type || "application/octet-stream",
     });
 
-    // Table to track uploads
-    await client.sql`
+    // Track uploads in Postgres
+    await sql`
       CREATE TABLE IF NOT EXISTS order_files (
         id BIGSERIAL PRIMARY KEY,
         order_id UUID NOT NULL,
@@ -65,24 +59,16 @@ export async function POST(req: Request) {
       );
     `;
 
-    await client.sql`
+    await sql`
       INSERT INTO order_files (order_id, section_idx, file_idx, original_name, blob_url)
       VALUES (${orderId}::uuid, ${sectionIdx}, ${fileIdx}, ${file.name}, ${blob.url});
     `;
 
-    return NextResponse.json(
-      { storedName: blobPath, url: blob.url },
-      { status: 200 }
-    );
+    return NextResponse.json({ storedName: blobPath, url: blob.url }, { status: 200 });
   } catch (e: any) {
     return NextResponse.json(
       { error: e?.message || "Upload failed" },
       { status: 500 }
     );
-  } finally {
-    // Always close the DB connection in serverless
-    try {
-      await client.end();
-    } catch {}
   }
 }

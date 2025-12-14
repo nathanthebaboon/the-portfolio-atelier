@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  const client = createClient(); // no connect()
-
   try {
     const payload = await req.json();
 
-    await client.sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
+    await sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
 
-    await client.sql`
+    await sql`
       CREATE TABLE IF NOT EXISTS orders (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         payload JSONB NOT NULL,
@@ -19,7 +17,7 @@ export async function POST(req: Request) {
       );
     `;
 
-    const { rows } = await client.sql`
+    const { rows } = await sql`
       INSERT INTO orders (payload)
       VALUES (${payload})
       RETURNING id;
@@ -31,10 +29,5 @@ export async function POST(req: Request) {
       { error: e?.message || "Order creation failed" },
       { status: 500 }
     );
-  } finally {
-    // You may keep this, but it's optional
-    try {
-      await client.end();
-    } catch {}
   }
 }
