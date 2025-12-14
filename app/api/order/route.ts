@@ -4,12 +4,10 @@ import { createClient } from "@vercel/postgres";
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const client = createClient(); // <-- let Vercel env handle it
+
   try {
     const payload = await req.json();
-
-    const client = createClient({
-      connectionString: process.env.POSTGRES_URL_NON_POOLING,
-    });
     await client.connect();
 
     await client.sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
@@ -28,13 +26,15 @@ export async function POST(req: Request) {
       RETURNING id;
     `;
 
-    await client.end();
-
     return NextResponse.json({ id: rows[0].id });
   } catch (e: any) {
     return NextResponse.json(
       { error: e?.message || "Order creation failed" },
       { status: 500 }
     );
+  } finally {
+    try {
+      await client.end();
+    } catch {}
   }
 }
