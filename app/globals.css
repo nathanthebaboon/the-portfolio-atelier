@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your portfolio colour system */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gold: #d4af37;
+  --silver: #cfd2d6;
+  --grey: #f4f4f5;
+  --white: #ffffff;
 }
 
 @theme inline {
@@ -24,3 +31,4 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
