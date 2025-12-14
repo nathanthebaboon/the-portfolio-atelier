@@ -4,11 +4,10 @@ import { createClient } from "@vercel/postgres";
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  const client = createClient(); // <-- let Vercel env handle it
+  const client = createClient(); // no connect()
 
   try {
     const payload = await req.json();
-    await client.connect();
 
     await client.sql`CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
 
@@ -33,6 +32,7 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   } finally {
+    // You may keep this, but it's optional
     try {
       await client.end();
     } catch {}
