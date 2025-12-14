@@ -1,11 +1,17 @@
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
-import { sql } from "@vercel/postgres";
+import { createClient } from "@vercel/postgres";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
+  const client = createClient({
+    connectionString: process.env.POSTGRES_URL_NON_POOLING,
+  });
+
   try {
+    await client.connect();
+
     const form = await req.formData();
 
     const orderId = String(form.get("orderId") || "");
@@ -18,9 +24,19 @@ export async function POST(req: Request) {
     }
 
     if (
-      !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId)
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        orderId
+      )
     ) {
       return NextResponse.json({ error: "Invalid orderId" }, { status: 400 });
+    }
+
+    if (!Number.isFinite(sectionIdx) || sectionIdx < 0) {
+      return NextResponse.json({ error: "Invalid sectionIdx" }, { status: 400 });
+    }
+
+    if (!Number.isFinite(fileIdx) || fileIdx < 0) {
+      return NextResponse.json({ error: "Invalid fileIdx" }, { status: 400 });
     }
 
     if (!file) {
@@ -37,7 +53,7 @@ export async function POST(req: Request) {
     });
 
     // Table to track uploads
-    await sql`
+    await client.sql`
       CREATE TABLE IF NOT EXISTS order_files (
         id BIGSERIAL PRIMARY KEY,
         order_id UUID NOT NULL,
@@ -49,17 +65,24 @@ export async function POST(req: Request) {
       );
     `;
 
-    await sql`
+    await client.sql`
       INSERT INTO order_files (order_id, section_idx, file_idx, original_name, blob_url)
       VALUES (${orderId}::uuid, ${sectionIdx}, ${fileIdx}, ${file.name}, ${blob.url});
     `;
 
-    // Return something your UI can show
-    return NextResponse.json({ storedName: blobPath, url: blob.url }, { status: 200 });
+    return NextResponse.json(
+      { storedName: blobPath, url: blob.url },
+      { status: 200 }
+    );
   } catch (e: any) {
     return NextResponse.json(
       { error: e?.message || "Upload failed" },
       { status: 500 }
     );
+  } finally {
+    // Always close the DB connection in serverless
+    try {
+      await client.end();
+    } catch {}
   }
 }
