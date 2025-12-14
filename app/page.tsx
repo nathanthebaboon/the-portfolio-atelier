@@ -296,7 +296,7 @@ export default function Page() {
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <Stat k="Key Deliverable" v="Portfolio Website" note="Custom Made for You" />
                 <Stat k="Quick Delivery" v="2–3 Days" note="After Order is Received" />
-                <Stat k="Payment On Delivery" v="$50" note="Fixed Price after PayNow" />
+                <Stat k="Payment On Delivery" v="$50 Fixed Price" note="Via PayNow" />
                 <Stat k="Quality Assured" v="Unlimited Revisions" note="Payment Only on Completion" />
               </div>
             </div>
@@ -335,9 +335,6 @@ export default function Page() {
               {/* About */}
               <div>
                 <label className="text-sm font-semibold">About</label>
-                <p className="mt-1 text-sm text-zinc-600">
-                  2–5 lines: who you are, what you do, what you’re looking for.
-                </p>
                 <textarea
                   className="mt-2 w-full min-h-[120px] rounded-3xl border border-[#cfd2d6] bg-white p-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40"
                   value={form.about}
@@ -352,7 +349,7 @@ export default function Page() {
                   <div>
                     <label className="text-sm font-semibold">Skills</label>
                     <p className="mt-1 text-sm text-zinc-600">
-                      Add keywords recruiters search for (e.g., Excel, Python, SQL, Public Speaking).
+                      Add skills that you have (e.g., Excel, Python, SQL, Public Speaking).
                     </p>
                   </div>
 
@@ -791,8 +788,11 @@ function isValidHexColor(x: string) {
 }
 
 function FAQAccordion() {
-  // 👉 Edit these
   const faqs = [
+    {
+      q: "How will my portfolio website look like?",
+      a: "By default, we build your portfolio using a clean, standard template that is optimised for recruiters. If you’d like additional customisation (layout changes, extra sections, special styling, or unique features), feel free to contact us to discuss the available options.",
+    },
     {
       q: "What should I include in my portfolio?",
       a: "Focus on your strongest work rather than everything you’ve done. A good portfolio usually includes a short introduction, 2–5 key projects or experiences, and clear descriptions of your role, approach, and outcomes.",
@@ -812,11 +812,7 @@ function FAQAccordion() {
     {
       q: "How many files should I upload per project or section?",
       a: "Quality matters more than quantity. One to three well-chosen files per project is usually sufficient. Too many files can overwhelm readers.",
-    },    
-    {
-      q: "Can I customise my own portfolio website?",
-      a: "By default, we build your portfolio using a clean, standard template that is optimised for recruiters. If you’d like additional customisation (layout changes, extra sections, special styling, or unique features), feel free to contact us to discuss the available options.",
-    },
+    }, 
     {
       q: "How long does it take to receive my portfolio website?",
       a: "The standard delivery time is 2–3 working days after we receive all required details and materials. More customised requests may take slightly longer, depending on scope.",
