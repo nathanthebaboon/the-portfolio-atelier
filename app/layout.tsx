@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hong's Portfolio Generator",
-  description: "Stand Out from Other Job Applicants with Your Own Portfolio Website",
+  title: "The Portfolio Atelier",
+  description: "Make your Resume Stand Out with Your Own Portfolio Website",
 };
 
 export default function RootLayout({

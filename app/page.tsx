@@ -44,13 +44,13 @@ export default function Page() {
 
     sections: [
       {
-        title: "Projects",
-        description: "Your best work and what impact it had.",
+        title: "",
+        description: "",
         files: [
           {
-            title: "Project / Report 1",
-            topic: "What is the broad topic",
-            description: "What it is + what you achieved.",
+            title: "",
+            topic: "",
+            description: "",
             attachment: null,
           },
         ],
@@ -251,11 +251,11 @@ export default function Page() {
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
               <p className="text-xs font-semibold tracking-[0.22em] uppercase text-zinc-500">
-                Welcome to Hong's Portfolio Generator
+                Welcome to The Portfolio Atelier
               </p>
 
               <h1 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
-                <span className="text-[#d4af37]">STAND OUT FROM OTHER JOB APPLICANTS </span>
+                <span className="text-[#d4af37]">MAKE YOUR RESUME STAND OUT </span>
                 WITH YOUR OWN PORTFOLIO WEBSITE
               </h1>
 
@@ -265,7 +265,7 @@ export default function Page() {
 
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://tang-en-ci-nathan-portfolio.vercel.app/"
+                  href="https://nathanael-tan-soon-meng-portfolio.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-2xl border border-[#cfd2d6] bg-white px-5 py-3 font-semibold hover:bg-zinc-50"
@@ -284,19 +284,19 @@ export default function Page() {
           </div>
         </section>
 
-        {/* OUR PROMISES */}
+        {/* OUR SERVICES */}
         <section className="mt-8">
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
 
               <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
-                <span className="text-[#d4af37]">Our Promises </span>
+                <span className="text-[#d4af37]">Our Services </span>
               </h2>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <Stat k="Key Deliverable" v="Portfolio Website" note="Custom Made for You" />
+                <Stat k="Key Deliverable" v="Portfolio Website" note="Custom Made for You Based on Our Templates" />
                 <Stat k="Quick Delivery" v="2–3 Days" note="After Order is Received" />
-                <Stat k="Payment On Delivery" v="$50 Fixed Price" note="Via PayNow" />
+                <Stat k="Payment On Delivery" v="$29.99 Fixed Price" note="Via PayNow" />
                 <Stat k="Quality Assured" v="Unlimited Revisions" note="Payment Only on Completion" />
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function Page() {
                   className="mt-2 w-full min-h-[120px] rounded-3xl border border-[#cfd2d6] bg-white p-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40"
                   value={form.about}
                   onChange={(e) => update("about", e.target.value)}
-                  placeholder="E.g., I’m a final-year student interested in product and analytics. I’ve led projects in..."
+                  placeholder="e.g., I’m a final-year student interested in product and analytics. I’ve led projects in..."
                 />
               </div>
 
@@ -410,11 +410,14 @@ export default function Page() {
                           label={`Section ${sIdx + 1} Title`}
                           value={sec.title}
                           onChange={(v) => updateSection(sIdx, { title: v })}
+                          placeholder="e.g. Financial Risk Management"
                         />
+
                         <Field
                           label={`Section ${sIdx + 1} Description`}
                           value={sec.description}
                           onChange={(v) => updateSection(sIdx, { description: v })}
+                          placeholder="e.g. Coursework completed as part of my Financial Risk Management module"
                         />
                       </div>
 
@@ -447,14 +450,14 @@ export default function Page() {
                                 label={`File ${fIdx + 1} Title`}
                                 value={f.title}
                                 onChange={(v) => updateFile(sIdx, fIdx, { title: v })}
-                                placeholder="e.g. Customer Churn Analysis"
+                                placeholder="e.g. Measuring Macroeconomic Tail Risk"
                               />
 
                               <Field
                                 label="Topic"
                                 value={f.topic}
                                 onChange={(v) => updateFile(sIdx, fIdx, { topic: v })}
-                                placeholder="e.g. Data Analytics, Marketing, Research"
+                                placeholder="e.g. Management of Macroeconomic Risks"
                               />
                             </div>
 
@@ -464,7 +467,7 @@ export default function Page() {
                                 className="mt-2 w-full min-h-[120px] rounded-2xl border border-[#cfd2d6] bg-white p-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40"
                                 value={f.description}
                                 onChange={(e) => updateFile(sIdx, fIdx, { description: e.target.value })}
-                                placeholder="What was the problem? What did you do? What was the outcome?"
+                                placeholder="e.g. This paper studies long-run tail risks in consumption and GDP using data from 42 countries (1900–2020), showing that macroeconomic tail risk helps explain asset prices and the equity premium."
                               />
                             </div>
 
@@ -571,13 +574,13 @@ export default function Page() {
                 <ChoiceCard
                   selected={form.hostingOption === "self_hosted"}
                   title="Self-Hosted Domain"
-                  desc="Simply purchase your own domain, and we will teach you how to host your portfolio website."
+                  desc="Simply purchase your own domain, and we will help you host your portfolio website on your domain for no additional cost."
                   onClick={() => update("hostingOption", "self_hosted")}
                 />
                 <ChoiceCard
                   selected={form.hostingOption === "need_help"}
-                  title="HPG Hosted Domain"
-                  desc="Let us know what domain name you would like, we will host it for you for free."
+                  title="The Portfolio Atelier Hosted Domain"
+                  desc="Let us know what domain name you would like, we will host it for you for an additional $19.99 per year (subject to availability)."
                   onClick={() => update("hostingOption", "need_help")}
                 />
               </div>
@@ -585,12 +588,12 @@ export default function Page() {
 
             {/* OTHER */}
             <div className="mt-10">
-              <label className="text-sm font-semibold">Other comments</label>
+              <label className="text-sm font-semibold">Other Comments</label>
               <textarea
                 className="mt-2 w-full min-h-[140px] rounded-3xl border border-[#cfd2d6] bg-white p-5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40"
                 value={form.otherComments}
                 onChange={(e) => update("otherComments", e.target.value)}
-                placeholder="Target role, preferred tone, what to highlight, anything to avoid, etc."
+                placeholder="Let us know how else we can help you."
               />
             </div>
 
@@ -618,7 +621,7 @@ export default function Page() {
                   </div>
                   <div className="mt-2 text-sm text-zinc-600">
                     Next: I’ll review your details and send a preview link. Payment is{" "}
-                    <span className="font-semibold text-[#d4af37]">$50 via PayNow after completion</span>.
+                    <span className="font-semibold text-[#d4af37]">$29.99 via PayNow after completion</span>.
                   </div>
                 </div>
               )}
@@ -643,19 +646,19 @@ export default function Page() {
 
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               <TestimonialCard
-                quote="Having a portfolio website made my applications feel much more professional. Recruiters actually clicked through my work."
-                name="Business Analytics Student"
+                quote="I sent out job applications for weeks with no replies. After adding my portfolio website to my CV, I finally got callbacks."
+                name="Business Student"
                 role="Final-year Undergraduate"
               />
 
               <TestimonialCard
-                quote="The structure helped me explain my projects clearly instead of dumping PDFs. It really improved how my experience came across."
+                quote="I didn’t realise it could be so easy and affordable to build a portfolio that actually gets results. If only I had discovered this earlier."
                 name="Marketing Associate"
                 role="Early-career Professional"
               />
 
               <TestimonialCard
-                quote="I didn’t know how to present my work before. The portfolio made it easy for interviewers to understand what I actually did."
+                quote="It has been so difficult proving my skills, ability and experience to recruiters. The Portfolio Atelier made it so much easier."
                 name="Engineering Graduate"
                 role="Job Seeker"
               />
@@ -680,28 +683,10 @@ export default function Page() {
         <section className="mt-10">
           <div className="h-px bg-gradient-to-r from-transparent via-[#cfd2d6] to-transparent" />
           <footer className="p-6 text-center text-sm text-zinc-500">
-            © {new Date().getFullYear()} — Hong&apos;s Portfolio Generator
+            © {new Date().getFullYear()} — The Portfolio Atelier
           </footer>
         </section>
       </div>
-
-      {/* WhatsApp Floating Button */}
-      <a
-        href="https://wa.me/6592222341" // replace with your number
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-14 w-14 rounded-full bg-[#25D366] shadow-lg hover:scale-105 transition"
-        aria-label="Chat on WhatsApp"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          fill="white"
-          className="h-7 w-7"
-        >
-          <path d="M16.002 3.2c-7.062 0-12.8 5.738-12.8 12.8 0 2.258.592 4.467 1.715 6.417L3.2 28.8l6.6-1.72a12.74 12.74 0 006.202 1.602h.002c7.06 0 12.796-5.738 12.796-12.8 0-7.062-5.736-12.8-12.798-12.8zm0 22.8h-.002a10.76 10.76 0 01-5.486-1.502l-.392-.232-3.92 1.02 1.048-3.822-.256-.392a10.722 10.722 0 01-1.644-5.712c0-5.976 4.864-10.84 10.848-10.84 5.978 0 10.844 4.864 10.844 10.84 0 5.978-4.866 10.84-10.84 10.84zm6.048-7.952c-.33-.166-1.95-.962-2.252-1.072-.302-.11-.522-.166-.742.166-.22.33-.852 1.072-1.046 1.292-.194.22-.388.248-.718.082-.33-.166-1.392-.514-2.652-1.64-.98-.872-1.64-1.95-1.834-2.28-.194-.33-.02-.508.146-.674.15-.148.33-.388.496-.582.166-.194.22-.33.33-.55.11-.22.056-.414-.028-.58-.084-.166-.742-1.788-1.016-2.452-.266-.64-.536-.554-.742-.564l-.634-.012c-.22 0-.58.082-.882.414-.302.33-1.156 1.128-1.156 2.752 0 1.624 1.186 3.194 1.352 3.414.166.22 2.336 3.568 5.66 5.002.792.342 1.41.546 1.892.698.796.252 1.52.216 2.094.132.638-.096 1.95-.798 2.226-1.57.276-.772.276-1.434.194-1.57-.084-.136-.302-.22-.634-.386z" />
-        </svg>
-      </a>
 
     </main>
   );
@@ -746,7 +731,9 @@ function Field({
         {label} {required ? <span className="text-[#d4af37]">*</span> : null}
       </label>
       <input
-        className="h-11 rounded-2xl border border-[#cfd2d6] bg-white px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40"
+        className="h-11 rounded-2xl border border-[#cfd2d6] bg-white px-4 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40
+                   placeholder:text-zinc-400"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
@@ -754,6 +741,7 @@ function Field({
     </div>
   );
 }
+
 
 function ChoiceCard({
   selected,
@@ -831,7 +819,7 @@ function FAQAccordion() {
     },
     {
       q: "How does payment work?",
-      a: "Payment is $50 via PayNow, and is only required after the portfolio website is completed and you’ve reviewed the preview.",
+      a: "Payment is $29.99 via PayNow, and is only required after the portfolio website is completed and you’ve reviewed the preview.",
     },
   ];
 
@@ -907,3 +895,4 @@ function TestimonialCard({
     </div>
   );
 }
+
