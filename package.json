@@ -6,12 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma migrate deploy && next build"
   },
   "dependencies": {
+    "@prisma/client": "^6.19.0",
     "@vercel/blob": "^2.0.0",
     "@vercel/postgres": "^0.10.0",
     "next": "16.0.10",
+    "prisma": "^6.19.0",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },
@@ -22,6 +26,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.22",
+    "dotenv": "^16.6.1",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
     "postcss": "^8.5.6",
