@@ -246,8 +246,10 @@ export default function Page() {
 
       <div className="mx-auto max-w-6xl px-4 py-10">
 
+
+
         {/* HERO */}
-        <section className="mt-8">
+        <section className="mt-0">
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
               <p className="text-xs font-semibold tracking-[0.22em] uppercase text-zinc-500">
@@ -284,8 +286,25 @@ export default function Page() {
           </div>
         </section>
 
+        {/* VIDEO HERO */}
+        <section className="mt-4">
+          <div className="rounded-3xl overflow-hidden border border-[#cfd2d6] bg-black relative">
+
+            {/* Video */}
+            <video
+              className="w-full h-[360px] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </section>
+
         {/* OUR SERVICES */}
-        <section className="mt-8">
+        <section className="mt-4">
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
 
@@ -304,10 +323,47 @@ export default function Page() {
           </div>
         </section>
 
+        {/* SHOWCASE VIDEOS */}
+        <section className="mt-4">
+          <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
+            <div className="p-8">
+              <div className="mt-0 grid gap-8 md:grid-cols-2">
+                {/* Video 1 */}
+                <div className="rounded-2xl overflow-hidden border border-[#cfd2d6] bg-black">
+                  <video
+                    className="w-full h-[260px] object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                  >
+                    <source src="/video1.mp4" type="video/mp4" />
+                  </video>
+                </div>
+
+                {/* Video 2 */}
+                <div className="rounded-2xl overflow-hidden border border-[#cfd2d6] bg-black">
+                  <video
+                    className="w-full h-[260px] object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                  >
+                    <source src="/video2.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ORDER FORM */}
         <section
           id="order"
-          className="mt-10 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden"
+          className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden"
         >
           <div className="p-8">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
