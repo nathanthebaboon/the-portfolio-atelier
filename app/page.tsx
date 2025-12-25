@@ -292,7 +292,7 @@ export default function Page() {
 
             {/* Video */}
             <video
-              className="w-full h-[360px] object-cover"
+              className="w-full h-[400px] object-cover"
               autoPlay
               muted
               loop
@@ -309,11 +309,11 @@ export default function Page() {
             <div className="p-8">
 
               <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
-                <span className="text-[#d4af37]">Our Services </span>
+                <span className="text-[#d4af37]">What We Do </span>
               </h2>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <Stat k="Key Deliverable" v="Portfolio Website" note="Custom Made for You Based on Our Templates" />
+                <Stat k="Our Specialty" v="Portfolio Website" note="Custom Made for You Based on Our Templates" />
                 <Stat k="Quick Delivery" v="2–3 Days" note="After Order is Received" />
                 <Stat k="Payment On Delivery" v="$29.99 Fixed Price" note="Via PayNow" />
                 <Stat k="Quality Assured" v="Unlimited Revisions" note="Payment Only on Completion" />
@@ -323,43 +323,40 @@ export default function Page() {
           </div>
         </section>
 
-        {/* SHOWCASE VIDEOS */}
+        {/* VIDEO HERO */}
         <section className="mt-4">
-          <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
-            <div className="p-8">
-              <div className="mt-0 grid gap-8 md:grid-cols-2">
-                {/* Video 1 */}
-                <div className="rounded-2xl overflow-hidden border border-[#cfd2d6] bg-black">
-                  <video
-                    className="w-full h-[260px] object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    controls
-                  >
-                    <source src="/video1.mp4" type="video/mp4" />
-                  </video>
-                </div>
+          <div className="rounded-3xl overflow-hidden border border-[#cfd2d6] bg-black relative">
 
-                {/* Video 2 */}
-                <div className="rounded-2xl overflow-hidden border border-[#cfd2d6] bg-black">
-                  <video
-                    className="w-full h-[260px] object-cover"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    controls
-                  >
-                    <source src="/video2.mp4" type="video/mp4" />
-                  </video>
-                </div>
-              </div>
-            </div>
+            {/* Video */}
+            <video
+              className="w-full h-[400px] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/video3.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
+        {/* VIDEO HERO */}
+        <section className="mt-4">
+          <div className="rounded-3xl overflow-hidden border border-[#cfd2d6] bg-black relative">
+
+            {/* Video */}
+            <video
+              className="w-full h-[500px] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/video2.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </section>
+        
         {/* ORDER FORM */}
         <section
           id="order"
@@ -692,9 +689,26 @@ export default function Page() {
           </div>
 
                 </section>
-        
+
+        {/* VIDEO HERO */}
+        <section className="mt-4">
+          <div className="rounded-3xl overflow-hidden border border-[#cfd2d6] bg-black relative">
+
+            {/* Video */}
+            <video
+              className="w-full h-[400px] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/video5.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </section>
+
         {/* Testimonials */}
-        <section className="mt-10 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
+        <section className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
           <div className="p-8">
             <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
               <span className="text-[#d4af37]">Our Testimonials</span>
@@ -722,8 +736,25 @@ export default function Page() {
           </div>
         </section>
 
+        {/* VIDEO HERO */}
+        <section className="mt-4">
+          <div className="rounded-3xl overflow-hidden border border-[#cfd2d6] bg-black relative">
+
+            {/* Video */}
+            <video
+              className="w-full h-[400px] object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              <source src="/video1.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </section>
+
         {/* FAQs (after Order Form) */}
-        <section className="mt-10 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
+        <section className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
           <div className="p-8">
             <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
               <span className="text-[#d4af37]">Frequently Asked Questions</span>
