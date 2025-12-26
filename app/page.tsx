@@ -33,6 +33,7 @@ type OrderPayload = {
 };
 
 export default function Page() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [form, setForm] = useState<OrderPayload>({
     name: "",
     tagline: "",
@@ -246,10 +247,98 @@ export default function Page() {
 
       <div className="mx-auto max-w-6xl px-4 py-10">
 
+      <header className="top-0 z-30 w-full border-b border-zinc-200 bg-[#fafafa]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          {/* Left — Logo + Name */}
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="h-9 w-9 rounded-full border border-[#d4af37]/60 object-cover"
+            />
+            <span className="text-base font-semibold tracking-tight md:text-lg">
+              The Portfolio Atelier
+            </span>
+          </div>
+
+          {/* Desktop — Menu + CTA */}
+          <div className="hidden items-center gap-4 md:flex">
+            <nav className="flex items-center gap-4 text-sm text-zinc-600">
+              <a href="#about" className="hover:text-black">
+                What We Do
+              </a>
+              <a href="#testimonials" className="hover:text-black">
+                Our Testimonials
+              </a>
+              <a href="#faqs" className="hover:text-black">
+                Frequently Asked Questions
+              </a>
+            </nav>
+
+            <a
+              href="#order"
+              className="inline-flex items-center rounded-full bg-[#d4af37] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-black shadow-sm transition hover:brightness-110"
+            >
+              Order Now
+            </a>
+          </div>
+
+          {/* Mobile — Hamburger */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen((prev) => !prev)}
+            className="md:hidden p-2 outline-none focus:outline-none"
+          >
+            <span className="sr-only">Open menu</span>
+
+            <div className="space-y-1">
+              <span className="block h-0.5 w-6 bg-black"></span>
+              <span className="block h-0.5 w-6 bg-black"></span>
+              <span className="block h-0.5 w-6 bg-black"></span>
+            </div>
+          </button>
+        </div>
+
+        {/* Mobile menu panel */}
+        {mobileOpen && (
+          <div className="border-t bg-white md:hidden">
+            <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 text-sm">
+              <a
+                href="#about"
+                className="rounded-lg px-2 py-2 hover:bg-zinc-50"
+                onClick={() => setMobileOpen(false)}
+              >
+                What We Do
+              </a>
+              <a
+                href="#testimonials"
+                className="rounded-lg px-2 py-2 hover:bg-zinc-50"
+                onClick={() => setMobileOpen(false)}
+              >
+                Our Testimonials
+              </a>
+              <a
+                href="#faqs"
+                className="rounded-lg px-2 py-2 hover:bg-zinc-50"
+                onClick={() => setMobileOpen(false)}
+              >
+                Frequently Asked Questions
+              </a>
+              <a
+                href="#order"
+                className="mt-1 inline-flex items-center justify-center rounded-full bg-[#d4af37] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-black shadow-sm hover:brightness-110"
+                onClick={() => setMobileOpen(false)}
+              >
+                Order Now
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
 
 
         {/* HERO */}
-        <section className="mt-0">
+        <section className="mt-4">
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
               <p className="text-xs font-semibold tracking-[0.22em] uppercase text-zinc-500">
@@ -304,7 +393,7 @@ export default function Page() {
         </section>
 
         {/* OUR SERVICES */}
-        <section className="mt-4">
+        <section id="about" className="mt-4">
           <div className="rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden">
             <div className="p-8">
 
@@ -708,7 +797,7 @@ export default function Page() {
         </section>
 
         {/* Testimonials */}
-        <section className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
+        <section id="testimonials" className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
           <div className="p-8">
             <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
               <span className="text-[#d4af37]">Our Testimonials</span>
@@ -754,7 +843,7 @@ export default function Page() {
         </section>
 
         {/* FAQs (after Order Form) */}
-        <section className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
+        <section id="faqs" className="mt-4 rounded-3xl border border-[#cfd2d6] bg-white shadow-sm overflow-hidden card-hover">
           <div className="p-8">
             <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight">
               <span className="text-[#d4af37]">Frequently Asked Questions</span>
